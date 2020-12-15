@@ -25,8 +25,20 @@ public class FonctionsMetier implements IMetier
     @Override
     public User GetUnUser(String login, String mdp)
     {
-        
-        return null;
+        User us = null;
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement stm = cnx.prepareStatement("select idUser, nomUser, prenomUser, statutUser from users where loginUser='"+login+"' and pwdUser='"+mdp+"'");
+            System.out.println(stm);
+            ResultSet rs = stm.executeQuery();
+            rs.next();
+            us = new User(rs.getInt("idUser"), rs.getString("nomUser"), rs.getString("prenomUser"), rs.getString("statutUser"));
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return us;
     }
 
     @Override

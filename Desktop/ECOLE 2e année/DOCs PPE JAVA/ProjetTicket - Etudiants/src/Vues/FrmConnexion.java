@@ -130,6 +130,8 @@ public class FrmConnexion extends javax.swing.JFrame {
                 if(unUser.getStatutUser().compareTo("admin") == 0)
                 {
                     // A vous de jouer
+                    FrmAdmin frm = new FrmAdmin();
+                    frm.setVisible(true);
                 }
                 else
                 {

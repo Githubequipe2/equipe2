@@ -42,5 +42,11 @@ public class ModelTicket extends AbstractTableModel
     public void loadDatas(ArrayList<Ticket> lesTickets)
     {
         // A vous de jouer
+        rows = new Vector<>();
+        for(Ticket tick : lesTickets)
+        {
+            rows.add(new String[]{String.valueOf(tick.getIdTicket()),tick.getNomTicket(),tick.getDateTicket(),tick.getNomEtat()});
+        }
+        fireTableChanged(null);
     }
 }
