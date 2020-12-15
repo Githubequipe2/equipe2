@@ -17,7 +17,9 @@ import javax.swing.JOptionPane;
  */
 public class FrmAdmin extends javax.swing.JFrame {
 
-
+    FonctionsMetier fm;
+    ModelTicket mdlTicket;
+    ModelUser mdUser;
     public FrmAdmin() {
         initComponents();
     }
@@ -169,18 +171,35 @@ public class FrmAdmin extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        fm = new FonctionsMetier();
+        mdUser = new ModelUser();
         
+        mdUser.loadDatas(fm.GetAllUsers());
+        tblUsers.setModel(mdUser);
         
+        txtNumTicket.setText(String.valueOf(fm.GetLastIdTicket()));
+        
+        for (Etat etat : fm.GetAllEtats())
+        {
+            cboEtatsTickets.addItem(etat.getNomEtat());
+        }
     }//GEN-LAST:event_formWindowOpened
 
     private void tblUsersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblUsersMouseClicked
+        int numUser = Integer.parseInt(tblUsers.getValueAt(tblUsers.getSelectedRow(), 0).toString());
+        mdlTicket = new ModelTicket();
+        mdlTicket.loadDatas(fm.GetAllTicketsByIdUser(numUser));
+        tblTickets.setModel(mdlTicket);
         
-
     }//GEN-LAST:event_tblUsersMouseClicked
 
     private void btnInsererNouveauTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInsererNouveauTicketMouseClicked
+        int a = Integer.parseInt(tblUsers.getValueAt(tblUsers.getSelectedRow(), 0).toString());
+        int etat= fm.GetIdEtat(cboEtatsTickets.getSelectedItem().toString());
+        fm.InsererTicket(fm.GetLastIdTicket(), txtNomTicket.getText(), "2020-12-15", a, etat);
         
-
+        mdlTicket.loadDatas(fm.GetAllTicketsByIdUser(a));
+        tblTickets.setModel(mdlTicket);
     }//GEN-LAST:event_btnInsererNouveauTicketMouseClicked
 
     /**

@@ -44,20 +44,60 @@ public class FonctionsMetier implements IMetier
     @Override
     public ArrayList<Ticket> GetAllTickets()
     {
-        
-        return null;
+        ArrayList<Ticket> Tick = new ArrayList<>();
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement stm = cnx.prepareStatement("select idTicket, nomTicket, dateTicket, etats.nomEtat from etats, tickets where etats.idEtat=tickets.numEtat");
+            System.out.println(stm);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                Ticket t = new Ticket(rs.getInt("idTicket"), rs.getString("nomTicket"), "2020-12-15", rs.getString("etats.nomEtat"));
+                Tick.add(t);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Tick;
     }
 
     @Override
     public ArrayList<Ticket> GetAllTicketsByIdUser(int idUser)
     {
-        
-        return null;
+        ArrayList<Ticket> Tick = new ArrayList<>();
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement stm = cnx.prepareStatement("select idTicket, nomTicket, dateTicket, etats.nomEtat as nomEtat from etats, tickets where etats.idEtat=tickets.numEtat and numUser="+idUser);
+            System.out.println(stm);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                Ticket t = new Ticket(rs.getInt("idTicket"), rs.getString("nomTicket"), rs.getString("dateTicket"), rs.getString("nomEtat"));
+                Tick.add(t);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Tick;
     }
 
     @Override
     public void InsererTicket(int idTicket, String nomTicket, String dateTicket, int idUser, int idEtat) 
     {
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement stm = cnx.prepareCall("insert into tickets Values("+idTicket+",'"+nomTicket+"','2020-12-15',"+idUser+","+idEtat+")");
+            System.out.println(stm);
+            stm.executeUpdate();
+            stm.close();
+            
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
         
         
     }
@@ -65,35 +105,93 @@ public class FonctionsMetier implements IMetier
     @Override
     public void ModifierEtatTicket(int idTicket, int idEtat) 
     {
-        
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement stm = cnx.prepareStatement("update tickets set numEtat = "+idEtat+" where idTicket="+idTicket);
+            stm.executeUpdate();
+            stm.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
         
     }
 
     @Override
     public ArrayList<User> GetAllUsers()
     {
-        
-        return null;   
+        ArrayList<User> Us = new ArrayList<>();
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement stm = cnx.prepareStatement("select idUser, nomUser , prenomUser, statutUser from users");
+            System.out.println(stm);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                User u = new User(rs.getInt("idUser"), rs.getString("nomUser"), rs.getString("prenomUser"), rs.getString("statutUser"));
+                Us.add(u);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return Us;
+           
     }
 
     @Override
     public int GetLastIdTicket()
     {
-        
-        return 0;
+        int lastId = 0;
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement ps = cnx.prepareStatement("select max(idTicket) as id from tickets");
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            lastId = rs.getInt("id") + 1;
+            ps.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lastId;
     }
 
     @Override
     public int GetIdEtat(String nomEtat)
     {
-        
-        return 0;
+        int id=0;
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement stm = cnx.prepareStatement("select idEtat from etats where nomEtat ='"+nomEtat+"'");
+            System.out.println(stm);
+            ResultSet rs = stm.executeQuery();
+            rs.next();
+            id = rs.getInt("idEtat");
+            rs.close();
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return id;
     }
 
     @Override
     public ArrayList<Etat> GetAllEtats()
     {
-        
-        return null;    
+        ArrayList<Etat> etat = new ArrayList<>();
+        try {
+            Connection cnx = ConnexionBDD.getCnx();
+            PreparedStatement stm = cnx.prepareStatement("select idEtat , nomEtat from etats");
+            System.out.println(stm);
+            ResultSet rs = stm.executeQuery();
+            while(rs.next())
+            {
+                Etat e = new Etat(rs.getInt("idEtat"), rs.getString("nomEtat"));
+                etat.add(e);
+            }
+            
+        } catch (SQLException ex) {
+            Logger.getLogger(FonctionsMetier.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return etat;
     }
 }

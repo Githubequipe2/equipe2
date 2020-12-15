@@ -17,7 +17,8 @@ import javax.swing.JOptionPane;
  */
 public class FrmUser extends javax.swing.JFrame {
 
-
+    FonctionsMetier fm;
+    ModelTicket modelTicket;
     static User leUser;
     public FrmUser(User unUser) {
         initComponents();
@@ -122,13 +123,26 @@ public class FrmUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
+        int idTicket= Integer.parseInt(tblTickets.getValueAt(tblTickets.getSelectedRow(), 0).toString());
+        int etat= fm.GetIdEtat(cboEtatsTickets.getSelectedItem().toString());
+        fm.ModifierEtatTicket(idTicket, etat);
         
-
+        modelTicket.loadDatas(fm.GetAllTicketsByIdUser(leUser.getIdUser()));
+        tblTickets.setModel(modelTicket);
     }//GEN-LAST:event_btnModifierMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        fm = new FonctionsMetier();
+        modelTicket = new ModelTicket();
         
-
+        modelTicket.loadDatas(fm.GetAllTicketsByIdUser(leUser.getIdUser()));
+        tblTickets.setModel(modelTicket);
+        
+        for (Etat etat : fm.GetAllEtats())
+        {
+            cboEtatsTickets.addItem(etat.getNomEtat());
+        }
+        
     }//GEN-LAST:event_formWindowOpened
 
     /**
