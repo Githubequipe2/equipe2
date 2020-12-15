@@ -194,12 +194,25 @@ public class FrmAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_tblUsersMouseClicked
 
     private void btnInsererNouveauTicketMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnInsererNouveauTicketMouseClicked
+        if(tblUsers.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(this, "Selectionner un User");
+        }
+        else 
+        if(txtNomTicket.getText().compareTo("")==0){
+            JOptionPane.showMessageDialog(this, "Saisir nom Ticket");
+        }
+        else{
+        
+        
         int a = Integer.parseInt(tblUsers.getValueAt(tblUsers.getSelectedRow(), 0).toString());
         int etat= fm.GetIdEtat(cboEtatsTickets.getSelectedItem().toString());
         fm.InsererTicket(fm.GetLastIdTicket(), txtNomTicket.getText(), "2020-12-15", a, etat);
         
         mdlTicket.loadDatas(fm.GetAllTicketsByIdUser(a));
         tblTickets.setModel(mdlTicket);
+        
+        
+        }
     }//GEN-LAST:event_btnInsererNouveauTicketMouseClicked
 
     /**

@@ -123,12 +123,19 @@ public class FrmUser extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnModifierMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModifierMouseClicked
+        if(tblTickets.getSelectedRowCount()==0){
+            JOptionPane.showMessageDialog(this, "selectionner Ticket");
+        }
+        else{
+            
+        
         int idTicket= Integer.parseInt(tblTickets.getValueAt(tblTickets.getSelectedRow(), 0).toString());
         int etat= fm.GetIdEtat(cboEtatsTickets.getSelectedItem().toString());
         fm.ModifierEtatTicket(idTicket, etat);
         
         modelTicket.loadDatas(fm.GetAllTicketsByIdUser(leUser.getIdUser()));
         tblTickets.setModel(modelTicket);
+        }
     }//GEN-LAST:event_btnModifierMouseClicked
 
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
