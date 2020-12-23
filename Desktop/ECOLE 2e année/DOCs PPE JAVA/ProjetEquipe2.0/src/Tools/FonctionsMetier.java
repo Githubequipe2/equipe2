@@ -9,6 +9,7 @@ package Tools;
  *
  * @author alexk
  */
-public class FonctionsMetier {
+public class FonctionsMetier implements IMetier
+{
     
 }

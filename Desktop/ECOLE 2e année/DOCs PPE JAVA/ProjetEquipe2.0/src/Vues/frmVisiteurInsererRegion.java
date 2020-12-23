@@ -5,6 +5,8 @@
  */
 package Vues;
 
+import Tools.ConnexionBDD;
+
 /**
  *
  * @author alexk
@@ -14,6 +16,7 @@ public class frmVisiteurInsererRegion extends javax.swing.JFrame {
     /**
      * Creates new form frmVisiteurInsererRegion
      */
+    ConnexionBDD cnxBDD;
     public frmVisiteurInsererRegion() {
         initComponents();
     }
@@ -47,7 +50,12 @@ public class frmVisiteurInsererRegion extends javax.swing.JFrame {
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Image/secteur-medical.jpg"))); // NOI18N
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -73,6 +81,11 @@ public class frmVisiteurInsererRegion extends javax.swing.JFrame {
         jLabel5.setText("REGION");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INSERER", "LISTER/MODIFIER" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -116,10 +129,10 @@ public class frmVisiteurInsererRegion extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel32, javax.swing.GroupLayout.PREFERRED_SIZE, 149, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(65, 65, 65))
+                        .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(36, 36, 36))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(tblSecteur3, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
@@ -136,8 +149,8 @@ public class frmVisiteurInsererRegion extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel32)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel32, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel6))
                 .addGap(33, 33, 33)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -201,7 +214,9 @@ public class frmVisiteurInsererRegion extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 10, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -213,11 +228,38 @@ public class frmVisiteurInsererRegion extends javax.swing.JFrame {
 
     private void lblAccueil3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAccueil3MouseClicked
         // TODO add your handling code here:
+        frmAccueil frm = new frmAccueil();
+        frm.setVisible(true);
     }//GEN-LAST:event_lblAccueil3MouseClicked
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        if(jComboBox1.getSelectedItem()=="INSERER"){
+        frmInsererVisteur frm = new frmInsererVisteur();
+        frm.setVisible(true);
+        }else if (jComboBox1.getSelectedItem()=="LISTER/MODIFIER"){
+        frmListerModifierVisiteur frm2 = new frmListerModifierVisiteur();
+        frm2.setVisible(true);
+        }else {
+           frmVisiteurInsererRegion frm3 = new frmVisiteurInsererRegion();
+        frm3.setVisible(true);
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+        if (jComboBox2.getSelectedItem()=="INSERER"){
+        frmInsererRegion frm2 = new frmInsererRegion();
+        frm2.setVisible(true);
+        }else {
+           frmListerModifierRegion frm3 = new frmListerModifierRegion();
+        frm3.setVisible(true);
+        }
+    }//GEN-LAST:event_jComboBox2ActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+    }//GEN-LAST:event_formWindowOpened
 
     /**
      * @param args the command line arguments
@@ -255,38 +297,22 @@ public class frmVisiteurInsererRegion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAnnuler;
     private javax.swing.JButton btnAnnuler3;
-    private javax.swing.JButton btnValider;
     private javax.swing.JButton btnValider3;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JComboBox<String> jComboBox2;
-    private javax.swing.JComboBox<String> jComboBox7;
-    private javax.swing.JComboBox<String> jComboBox8;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel32;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JLabel lblAccueil;
     private javax.swing.JLabel lblAccueil3;
-    private javax.swing.JTable tblRegion;
     private javax.swing.JTable tblRegions;
-    private javax.swing.JScrollPane tblSecteur;
     private javax.swing.JScrollPane tblSecteur3;
     private javax.swing.JScrollPane tblSecteur4;
     private javax.swing.JTable tblVisiteur;
-    private javax.swing.JTextField txtNomRegion;
     // End of variables declaration//GEN-END:variables
 }

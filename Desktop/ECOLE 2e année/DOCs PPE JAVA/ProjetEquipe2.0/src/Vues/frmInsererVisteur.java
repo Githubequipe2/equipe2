@@ -5,6 +5,8 @@
  */
 package Vues;
 
+import Tools.ConnexionBDD;
+
 /**
  *
  * @author alexk
@@ -14,6 +16,7 @@ public class frmInsererVisteur extends javax.swing.JFrame {
     /**
      * Creates new form frmInsererVisteur
      */
+    ConnexionBDD cnxBDD;
     public frmInsererVisteur() {
         initComponents();
     }
@@ -59,7 +62,7 @@ public class frmInsererVisteur extends javax.swing.JFrame {
         jLabel12 = new javax.swing.JLabel();
         txtDateEmbauche = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -85,6 +88,11 @@ public class frmInsererVisteur extends javax.swing.JFrame {
         jLabel5.setText("REGION");
 
         jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "INSERER", "LISTER/MODIFIER" }));
+        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox2ActionPerformed(evt);
+            }
+        });
 
         jPanel2.setBackground(new java.awt.Color(51, 102, 255));
 
@@ -317,11 +325,34 @@ public class frmInsererVisteur extends javax.swing.JFrame {
 
     private void lblAccueilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAccueilMouseClicked
         // TODO add your handling code here:
+        frmAccueil frm = new frmAccueil();
+        frm.setVisible(true);
     }//GEN-LAST:event_lblAccueilMouseClicked
 
     private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
         // TODO add your handling code here:
+        if(jComboBox1.getSelectedItem()=="INSERER"){
+        frmInsererVisteur frm = new frmInsererVisteur();
+        frm.setVisible(true);
+        }else if (jComboBox1.getSelectedItem()=="LISTER/MODIFIER"){
+        frmListerModifierVisiteur frm2 = new frmListerModifierVisiteur();
+        frm2.setVisible(true);
+        }else {
+           frmVisiteurInsererRegion frm3 = new frmVisiteurInsererRegion();
+        frm3.setVisible(true);
+        }
     }//GEN-LAST:event_jComboBox1ActionPerformed
+
+    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+        // TODO add your handling code here:
+        if (jComboBox2.getSelectedItem()=="INSERER"){
+        frmInsererRegion frm2 = new frmInsererRegion();
+        frm2.setVisible(true);
+        }else {
+           frmListerModifierRegion frm3 = new frmListerModifierRegion();
+        frm3.setVisible(true);
+        }
+    }//GEN-LAST:event_jComboBox2ActionPerformed
 
     /**
      * @param args the command line arguments
