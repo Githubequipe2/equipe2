@@ -11,4 +11,35 @@ package Entity;
  */
 public class Secteur {
     
+    private int secCode;
+    private String secLibelle;
+    
+    public Secteur(){
+        
+    }
+    
+    public Secteur(int unSecCode, String unSecLibelle){
+        
+        secCode=unSecCode;
+        secLibelle=unSecLibelle;
+        
+    }
+
+    /**
+     * @return the secCode
+     */
+    public int getSecCode() {
+        return secCode;
+    }
+
+    /**
+     * @return the secLibelle
+     */
+    public String getSecLibelle() {
+        return secLibelle;
+    }
+    
+    
+    
+    
 }
