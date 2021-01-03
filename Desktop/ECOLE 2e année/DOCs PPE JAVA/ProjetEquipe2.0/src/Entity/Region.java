@@ -14,6 +14,7 @@ public class Region {
     private int regCode;
     private int secCode;
     private String regNom;
+    public Object getRegNom;
     
     public Region(){
         
